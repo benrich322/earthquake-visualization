@@ -9,17 +9,18 @@ html {
   height: 100%;
 }
 
+#legend-container
+{
+  margin-top: 20px; /* Add margin on the top */
+  margin-right: 20px; /* Add margin on the right */
+  margin-bottom: 20px; /* Add margin on the bottom */
+  margin-left: 20px; /* Add margin on the left */
+}
 #legend,
 .legend-item {
   display: flex;
   align-items: center;
   margin-bottom: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.legend-label {
-  font-size: 12px;
 }
 
 .legend-square {

@@ -23,9 +23,10 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
              // Calculate marker color based on depth
              let depth = feature.geometry.coordinates[2];
              let color = depth >= -10 && depth <= 10 ? 'lime' : 
-                depth > 10 && depth <= 30 ? 'yellow' :
-                depth > 30 && depth <= 50 ? 'orange' :
-                depth > 50 && depth <= 70 ? 'red' : 'purple';
+                depth > 10 && depth <= 30 ? '#ADFF2F' :
+                depth > 30 && depth <= 50 ? 'yellow' :
+                depth > 50 && depth <= 70 ? '#FFD700' :
+                depth > 70 && depth <= 90 ? 'orange' : 'red';
              
 
             let marker = L.circleMarker(latlng, {
@@ -59,7 +60,7 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
         let div = L.DomUtil.create('div', 'legend');
 
         let legendItems = [
-            { color: 'lime', label: '-10-10', condition: (depth) => depth >= -10 && depth <= 10 },
+            { color: 'lime', label: '-10-10'},
             { color: '#ADFF2F', label: '10-30', condition: (depth) => depth > 10 && depth <= 30 },
             { color: 'yellow', label: '30-50', condition: (depth) => depth > 30 && depth <= 50 },
             { color: '#FFD700', label: '50-70', condition: (depth) => depth > 50 && depth <= 70 },
@@ -73,7 +74,7 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
             let legendColor = L.DomUtil.create('div', 'legend-square', legendItem); // Use 'legend-square' class
             legendColor.style.backgroundColor = item.color;
 
-            let legendLabel = L.DomUtil.create('div', 'legend-label', legendItem);
+            let legendLabel = L.DomUtil.create('div', 'legend', legendItem);
             legendLabel.textContent = item.label;
         });
 
@@ -84,6 +85,7 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
     legendControl.addTo(myMap);
 
     document.querySelector('.legend').style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+    document.querySelector('.legend').style.padding = '10px';
 
 })
 
