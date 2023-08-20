@@ -16,10 +16,19 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
     // Create a GeoJSON layer and add it to the map
     L.geoJSON(data, {
         pointToLayer: function(feature, latlng) {
+
+            // Calculate marker radius based on magnitude
+            let radius = Math.sqrt(feature.properties.mag) * 5;
+
+             // Calculate marker color based on depth
+             let depth = feature.geometry.coordinates[2];
+             let color = depth > 70 ? 'red' : depth > 30 ? 'orange' : 'lime';
+             
+
             return L.circleMarker(latlng, {
-                radius: feature.properties.mag * 3, // Customize marker size
-                fillColor: 'red',
-                color: 'red',
+                radius: radius,
+                fillColor: color,
+                color: 'black', // Border color
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
