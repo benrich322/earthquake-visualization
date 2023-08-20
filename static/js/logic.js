@@ -25,14 +25,14 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
              let color = depth > 70 ? 'red' : depth > 30 ? 'orange' : 'lime';
              
 
-            return L.circleMarker(latlng, {
+            let marker = L.circleMarker(latlng, {
                 radius: radius,
                 fillColor: color,
                 color: 'black', // Border color
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
-            }).bindPopup('Magnitude: ' + feature.properties.mag + '<br>Location: ' + feature.properties.place);
+            });
 
             // Create a popup content string with earthquake details
             let popupContent = `
@@ -47,33 +47,43 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
             return marker;
         }
     }).addTo(myMap);
+
+    // Create the legend control
+    let legendControl = L.control({ position: 'bottomright' });
+
+    // Define legend items and their corresponding colors and depth ranges
+    legendControl.onAdd = function(map) {
+        let div = L.DomUtil.create('div', 'legend');
+
+        let legendItems = [
+            { color: 'red', label: 'Depth > 70 km' },
+            { color: 'orange', label: '30 km < Depth ≤ 70 km' },
+            { color: 'lime', label: 'Depth ≤ 30 km' }
+        ];
+
+        legendItems.forEach(item => {
+            let legendItem = L.DomUtil.create('div', 'legend-item', div);
+
+            let legendColor = L.DomUtil.create('div', 'legend-color', legendItem);
+            legendColor.style.backgroundColor = item.color;
+
+            let legendLabel = L.DomUtil.create('div', 'legend-label', legendItem);
+            legendLabel.textContent = item.label;
+        });
+
+        return div;
+    };
+
+    // Add the legend control to the map
+    legendControl.addTo(myMap);
+
+    document.querySelector('.legend').style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+
 })
+
 .catch(error => console.error('Error loading GeoJSON data:', error));
 
-// Get the legend div element
-let legend = L.control({ position: 'bottomright' });
 
-// Define legend items and their corresponding colors and depth ranges
-legend.onAdd = function(map) {
-    let div = L.DomUtil.create('div', 'legend');
 
-    let legendItems = [
-        { color: 'red', label: 'Depth > 70 km' },
-        { color: 'orange', label: '30 km < Depth ≤ 70 km' },
-        { color: 'lime', label: 'Depth ≤ 30 km' }
-    ];
 
-    legendItems.forEach(item => {
-        let legendItem = L.DomUtil.create('div', 'legend-item', div);
 
-        let legendColor = L.DomUtil.create('div', 'legend-color', legendItem);
-        legendColor.style.backgroundColor = item.color;
-
-        let legendLabel = L.DomUtil.create('div', 'legend-label', legendItem);
-        legendLabel.textContent = item.label;
-    });
-
-    return div;
-};
-
-legend.addTo(myMap);
