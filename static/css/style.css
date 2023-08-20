@@ -13,11 +13,13 @@ html {
 .legend-item {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .legend-label {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .legend-square {

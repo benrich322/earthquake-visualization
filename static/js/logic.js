@@ -59,11 +59,12 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
         let div = L.DomUtil.create('div', 'legend');
 
         let legendItems = [
-            { color: 'purple', label: 'Depth > 70 km', condition: (depth) => depth > 70 },
-            { color: 'red', label: '51 km < Depth ≤ 70 km', condition: (depth) => depth > 50 && depth <= 70 },
-            { color: 'orange', label: '31 km < Depth ≤ 50 km', condition: (depth) => depth > 30 && depth <= 50 },
-            { color: 'yellow', label: '11 km < Depth ≤ 30 km', condition: (depth) => depth > 10 && depth <= 30 },
-            { color: 'lime', label: '-10-10', condition: (depth) => depth >= -10 && depth <= 10 }
+            { color: 'lime', label: '-10-10', condition: (depth) => depth >= -10 && depth <= 10 },
+            { color: '#ADFF2F', label: '10-30', condition: (depth) => depth > 10 && depth <= 30 },
+            { color: 'yellow', label: '30-50', condition: (depth) => depth > 30 && depth <= 50 },
+            { color: '#FFD700', label: '50-70', condition: (depth) => depth > 50 && depth <= 70 },
+            { color: 'orange', label: '70-90', condition: (depth) => depth > 70 && depth <= 90 },
+            { color: 'red', label: '90+', condition: (depth) => depth > 90 },
         ];
 
         legendItems.forEach(item => {
