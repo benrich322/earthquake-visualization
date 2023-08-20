@@ -33,6 +33,18 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
                 opacity: 1,
                 fillOpacity: 0.8
             }).bindPopup('Magnitude: ' + feature.properties.mag + '<br>Location: ' + feature.properties.place);
+
+            // Create a popup content string with earthquake details
+            let popupContent = `
+                <b>Magnitude:</b> ${feature.properties.mag}<br>
+                <b>Location:</b> ${feature.properties.place}<br>
+                <b>Depth:</b> ${depth} km<br>
+                <b>Time:</b> ${new Date(feature.properties.time).toLocaleString()}
+            `;
+            
+            marker.bindPopup(popupContent);
+            
+            return marker;
         }
     }).addTo(myMap);
 })
