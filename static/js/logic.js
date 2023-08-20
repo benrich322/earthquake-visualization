@@ -49,3 +49,31 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
     }).addTo(myMap);
 })
 .catch(error => console.error('Error loading GeoJSON data:', error));
+
+// Get the legend div element
+let legend = L.control({ position: 'bottomright' });
+
+// Define legend items and their corresponding colors and depth ranges
+legend.onAdd = function(map) {
+    let div = L.DomUtil.create('div', 'legend');
+
+    let legendItems = [
+        { color: 'red', label: 'Depth > 70 km' },
+        { color: 'orange', label: '30 km < Depth ≤ 70 km' },
+        { color: 'lime', label: 'Depth ≤ 30 km' }
+    ];
+
+    legendItems.forEach(item => {
+        let legendItem = L.DomUtil.create('div', 'legend-item', div);
+
+        let legendColor = L.DomUtil.create('div', 'legend-color', legendItem);
+        legendColor.style.backgroundColor = item.color;
+
+        let legendLabel = L.DomUtil.create('div', 'legend-label', legendItem);
+        legendLabel.textContent = item.label;
+    });
+
+    return div;
+};
+
+legend.addTo(myMap);
