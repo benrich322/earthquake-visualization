@@ -64,7 +64,7 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
         legendItems.forEach(item => {
             let legendItem = L.DomUtil.create('div', 'legend-item', div);
 
-            let legendColor = L.DomUtil.create('div', 'legend-color', legendItem);
+            let legendColor = L.DomUtil.create('div', 'legend-square', legendItem); // Use 'legend-square' class
             legendColor.style.backgroundColor = item.color;
 
             let legendLabel = L.DomUtil.create('div', 'legend-label', legendItem);
