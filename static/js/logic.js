@@ -22,7 +22,10 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
 
              // Calculate marker color based on depth
              let depth = feature.geometry.coordinates[2];
-             let color = depth > 70 ? 'red' : depth > 30 ? 'orange' : 'lime';
+             let color = depth >= -10 && depth <= 10 ? 'lime' : 
+                depth > 10 && depth <= 30 ? 'yellow' :
+                depth > 30 && depth <= 50 ? 'orange' :
+                depth > 50 && depth <= 70 ? 'red' : 'purple';
              
 
             let marker = L.circleMarker(latlng, {
@@ -56,9 +59,11 @@ fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
         let div = L.DomUtil.create('div', 'legend');
 
         let legendItems = [
-            { color: 'red', label: 'Depth > 70 km' },
-            { color: 'orange', label: '30 km < Depth ≤ 70 km' },
-            { color: 'lime', label: 'Depth ≤ 30 km' }
+            { color: 'purple', label: 'Depth > 70 km', condition: (depth) => depth > 70 },
+            { color: 'red', label: '51 km < Depth ≤ 70 km', condition: (depth) => depth > 50 && depth <= 70 },
+            { color: 'orange', label: '31 km < Depth ≤ 50 km', condition: (depth) => depth > 30 && depth <= 50 },
+            { color: 'yellow', label: '11 km < Depth ≤ 30 km', condition: (depth) => depth > 10 && depth <= 30 },
+            { color: 'lime', label: '-10-10', condition: (depth) => depth >= -10 && depth <= 10 }
         ];
 
         legendItems.forEach(item => {
